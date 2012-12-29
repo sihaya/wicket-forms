@@ -1,0 +1,17 @@
+<wicket:extend id="content">
+    <h1>Overview of all forms</h1>
+    <wicket:container wicket:id="formListPanel"/>
+    
+    <form wicket:id="newForm">
+        <fieldset>
+            <legend>Add new form</legend>
+            
+            <label>Form name</label>
+            <input type="text" name="name" wicket:id="name"/>
+            
+            <p>
+                <input type="submit" value="Add new form"/>
+            </p>
+        </fieldset>        
+    </form>
+</wicket:extend>
