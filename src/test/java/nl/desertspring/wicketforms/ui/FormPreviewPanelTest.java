@@ -13,6 +13,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
+import wicketdnd.DropTarget;
 
 /**
  *
@@ -37,8 +38,25 @@ public class FormPreviewPanelTest
 
         FormPreviewPanel previewPanel = new FormPreviewPanel("panel", Model.of(form));
 
-        wicketTester.startComponent(previewPanel);
+        wicketTester.startComponentInPage(previewPanel);
 
         wicketTester.assertContains("This is page 1");
+    }
+    
+    @Test
+    public void afterAndBeforeAPageItRendersADropTarget() {
+        WicketTester wicketTester = new WicketTester();
+
+        Page page1 = new Page();
+        page1.setTitle("This is page 1");
+        
+        Form form = mock(Form.class);
+        when(form.getPages()).thenReturn(new LinkedHashSet<Page>(Arrays.asList(page1)));
+        
+        FormPreviewPanel previewPanel = new FormPreviewPanel("panel", Model.of(form));
+        
+        wicketTester.startComponentInPage(previewPanel);
+        
+        //wicketTester.executeBehavior(previewPanel.get("pageList").getBehaviors(DropTarget.class).get(0));
     }
 }

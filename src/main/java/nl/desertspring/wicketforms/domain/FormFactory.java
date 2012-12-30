@@ -4,7 +4,9 @@
  */
 package nl.desertspring.wicketforms.domain;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,6 +20,12 @@ public class FormFactory
         Form form = new Form();
         form.setName(name);
         form.setCreationDate(new Date());
+        
+        Page page = new Page();
+        page.setForm(form);
+        page.setTitle("Page 1");
+        
+        form.setPages(new LinkedHashSet<Page>(Arrays.asList(page)));
         
         return form;
     }

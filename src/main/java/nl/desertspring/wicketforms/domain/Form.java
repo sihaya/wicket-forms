@@ -7,12 +7,15 @@ package nl.desertspring.wicketforms.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import java.util.SortedSet;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -31,7 +34,9 @@ public class Form implements Serializable
     private String name;
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
-    @OneToMany(mappedBy = "form")
+    
+    @OrderBy("pageId")
+    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Page> pages;
 
     /**
@@ -84,5 +89,14 @@ public class Form implements Serializable
     public void setPages(Set<Page> pages)
     {
         this.pages = pages;
+    }
+
+    public void addPageAfter(Page page)
+    {
+        Page newPage = new Page();
+                
+        pages.add(newPage);
+        
+        newPage.setTitle("New page " + pages.size());
     }
 }

@@ -33,7 +33,13 @@ public class FormRepository
 
     public List<Form> findAll()
     {
-        return entityManager.createQuery("from Form f order by f.creationDate", Form.class).getResultList();
+        List<Form> result = entityManager.createQuery("from Form f order by f.creationDate", Form.class).getResultList();
+        
+        for(Form form : result) {
+            form.getPages().size();
+        }
+        
+        return result;
     }    
     
     public Form getById(int formId) {
