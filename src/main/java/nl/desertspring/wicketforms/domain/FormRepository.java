@@ -45,4 +45,9 @@ public class FormRepository
     public Form getById(int formId) {
         return entityManager.find(Form.class, formId);
     }
+
+    public Form merge(Form form)
+    {
+        return entityManager.merge(form);
+    }
 }

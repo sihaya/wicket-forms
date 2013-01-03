@@ -6,6 +6,7 @@ package nl.desertspring.wicketforms.ui;
 
 import java.util.List;
 import nl.desertspring.wicketforms.domain.Form;
+import nl.desertspring.wicketforms.domain.FormRepository;
 import nl.desertspring.wicketforms.domain.Page;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -25,7 +26,7 @@ import wicketdnd.*;
 public class FormPreviewPanel extends Panel
 {
 
-    public FormPreviewPanel(String id, final IModel<Form> form)
+    public FormPreviewPanel(String id, final IModel<Form> form, final FormRepository formRepository)
     {
         super(id);
 
@@ -59,15 +60,18 @@ public class FormPreviewPanel extends Panel
             @Override
             public void onDrop(AjaxRequestTarget target, Transfer transfer, Location location) throws Reject
             {
-                System.out.println("Gonna do drop");
-                
                 Page page = (Page)location.getModelObject();
+                
+                System.out.println("Gonna do drop: " + page);
                 
                 form.getObject().addPageAfter(page);
                 
                 list.modelChanged();
                 
-                target.add(pageListContainer);                
+                target.add(pageListContainer);
+                
+                Form mergedForm = formRepository.merge(form.getObject());
+                form.setObject(mergedForm);
             }
         };
         dropTarget.dropTopAndBottom("div.page");

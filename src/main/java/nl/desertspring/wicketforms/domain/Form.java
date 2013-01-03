@@ -6,6 +6,7 @@ package nl.desertspring.wicketforms.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import javax.persistence.CascadeType;
@@ -35,9 +36,9 @@ public class Form implements Serializable
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
     
-    @OrderBy("pageId")
+    @OrderBy("position")
     @OneToMany(mappedBy = "form", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Page> pages;
+    private List<Page> pages;
 
     /**
      * @return the formId
@@ -81,22 +82,33 @@ public class Form implements Serializable
         return creationDate;
     }
 
-    public Set<Page> getPages()
+    public List<Page> getPages()
     {
         return pages;
     }
 
-    public void setPages(Set<Page> pages)
+    public void setPages(List<Page> pages)
     {
         this.pages = pages;
     }
 
-    public void addPageAfter(Page page)
+    public Page addPageAfter(Page page)
     {
         Page newPage = new Page();
                 
-        pages.add(newPage);
+        pages.add(pages.indexOf(page) + 1, newPage);
         
         newPage.setTitle("New page " + pages.size());
+        newPage.setPosition(page.getPosition() + 1);
+        newPage.setForm(this);
+        
+        int newIndex = pages.indexOf(newPage);
+        if (newIndex != pages.size() - 1) {
+            for(Page update : pages.subList(newIndex + 1, pages.size())) {
+                update.setPosition(update.getPosition() + 1);
+            }
+        }
+        
+        return newPage;
     }
 }

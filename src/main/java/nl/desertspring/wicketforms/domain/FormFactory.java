@@ -24,8 +24,9 @@ public class FormFactory
         Page page = new Page();
         page.setForm(form);
         page.setTitle("Page 1");
+        page.setPosition(0);
         
-        form.setPages(new LinkedHashSet<Page>(Arrays.asList(page)));
+        form.setPages(Arrays.asList(page));
         
         return form;
     }

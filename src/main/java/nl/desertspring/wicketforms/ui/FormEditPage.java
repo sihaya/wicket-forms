@@ -5,6 +5,7 @@
 package nl.desertspring.wicketforms.ui;
 
 import nl.desertspring.wicketforms.domain.Form;
+import nl.desertspring.wicketforms.domain.FormRepository;
 import nl.desertspring.wicketforms.domain.Page;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
@@ -14,6 +15,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.CssPackageResource;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import wicketdnd.theme.WebTheme;
 
 /**
@@ -22,6 +24,9 @@ import wicketdnd.theme.WebTheme;
  */
 public class FormEditPage extends BasePage
 {
+    
+    @SpringBean
+    private FormRepository formRepository;
 
     @Override
     public void renderHead(IHeaderResponse response)
@@ -35,7 +40,7 @@ public class FormEditPage extends BasePage
         add(new BookmarkablePageLink("backLink", FormOverviewPage.class));
         add(new Label("formName", new PropertyModel<String>(form, "name")));
         add(new ToolboxPanel("toolbox"));
-        add(new FormPreviewPanel("preview", form));
+        add(new FormPreviewPanel("preview", form, formRepository));
     }
     
 }

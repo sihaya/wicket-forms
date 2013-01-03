@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import nl.desertspring.wicketforms.domain.Form;
+import nl.desertspring.wicketforms.domain.FormRepository;
 import nl.desertspring.wicketforms.domain.Page;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.WicketTester;
@@ -21,6 +22,7 @@ import wicketdnd.DropTarget;
  */
 public class FormPreviewPanelTest
 {
+    FormRepository formRepository = mock(FormRepository.class);
 
     @Test
     public void givenAFormWithPagesItRendersAPreview()
@@ -34,9 +36,9 @@ public class FormPreviewPanelTest
         page2.setTitle("This being page 2");
 
         Form form = mock(Form.class);
-        when(form.getPages()).thenReturn(new LinkedHashSet<Page>(Arrays.asList(page1, page2)));
+        when(form.getPages()).thenReturn(Arrays.asList(page1, page2));
 
-        FormPreviewPanel previewPanel = new FormPreviewPanel("panel", Model.of(form));
+        FormPreviewPanel previewPanel = new FormPreviewPanel("panel", Model.of(form), formRepository);
 
         wicketTester.startComponentInPage(previewPanel);
 
@@ -51,9 +53,9 @@ public class FormPreviewPanelTest
         page1.setTitle("This is page 1");
         
         Form form = mock(Form.class);
-        when(form.getPages()).thenReturn(new LinkedHashSet<Page>(Arrays.asList(page1)));
+        when(form.getPages()).thenReturn(Arrays.asList(page1));
         
-        FormPreviewPanel previewPanel = new FormPreviewPanel("panel", Model.of(form));
+        FormPreviewPanel previewPanel = new FormPreviewPanel("panel", Model.of(form), formRepository);
         
         wicketTester.startComponentInPage(previewPanel);
         

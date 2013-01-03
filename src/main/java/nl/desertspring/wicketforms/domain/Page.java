@@ -27,6 +27,8 @@ public class Page implements Serializable
     @ManyToOne(optional = false)
     private Form form;
     private String title;
+    
+    private Integer position;
 
     public Integer getPageId()
     {
@@ -57,4 +59,17 @@ public class Page implements Serializable
     {
         this.form = form;
     }
+
+    public Integer getPosition()
+    {
+        return position;
+    }
+
+    public void setPosition(Integer position)
+    {
+        this.position = position;
+    }
+    
+    
+    
 }
