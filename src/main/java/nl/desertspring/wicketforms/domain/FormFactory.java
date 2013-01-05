@@ -26,6 +26,8 @@ public class FormFactory
         page.setTitle("Page 1");
         page.setPosition(0);
         
+        page.createQuestionAfter(null);
+        
         form.setPages(Arrays.asList(page));
         
         return form;

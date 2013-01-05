@@ -35,4 +35,16 @@ public class FormTest
         assertEquals((Integer)1, page.getPosition());
         assertEquals(form, page.getForm());
     }
+    
+    @Test
+    public void givenAFormCreateSubmissionReturnsSubmission() {
+        Page page = new Page();
+        Form form = new Form();
+        
+        form.setPages(Arrays.asList(page));
+        
+        Submission submission = form.createSubmission();
+        
+        assertEquals(form, submission.getForm());
+    }    
 }

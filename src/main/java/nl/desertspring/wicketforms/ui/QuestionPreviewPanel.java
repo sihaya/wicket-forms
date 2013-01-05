@@ -8,6 +8,7 @@ import java.util.List;
 import nl.desertspring.wicketforms.domain.Form;
 import nl.desertspring.wicketforms.domain.FormRepository;
 import nl.desertspring.wicketforms.domain.Page;
+import nl.desertspring.wicketforms.domain.Question;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -23,21 +24,21 @@ import wicketdnd.*;
  *
  * @author sihaya
  */
-public class FormPreviewPanel extends Panel
+public class QuestionPreviewPanel extends Panel
 {
 
-    public FormPreviewPanel(String id, final IModel<Form> form, final FormRepository formRepository)
+    public QuestionPreviewPanel(String id, final FormRepository formRepository, final IModel<Form> form, final IModel<Page> page)
     {
-        super(id);
-
-        final WebMarkupContainer pageListContainer = new WebMarkupContainer("pageListContainer");
-        final ListView<Page> list = new ListView<Page>("pageList", new SortedSetListModel(new PropertyModel<List<Page>>(form, "pages")))
+        super(id, page);
+        
+        final WebMarkupContainer questionListContainer = new WebMarkupContainer("questionListContainer");
+        final ListView<Question> list = new ListView<Question>("questionList", new SortedSetListModel(new PropertyModel<List<Page>>(page, "questions")))
         {
 
             @Override
-            protected ListItem<Page> newItem(int index, IModel<Page> itemModel)
+            protected ListItem<Question> newItem(int index, IModel<Question> itemModel)
             {
-                ListItem<Page> item = super.newItem(index, itemModel);
+                ListItem<Question> item = super.newItem(index, itemModel);
                 
                 item.setOutputMarkupId(true);
                 
@@ -46,10 +47,9 @@ public class FormPreviewPanel extends Panel
             
 
             @Override
-            protected void populateItem(ListItem<Page> item)
-            {                
-                item.add(new Label("title", new PropertyModel<String>(item.getModel(), "title")));
-                item.add(new QuestionPreviewPanel("questionPreviewPanel", formRepository, form, item.getModel()));
+            protected void populateItem(ListItem<Question> item)
+            {   
+                item.add(new ClosedYesNoQuestion("component", item.getModel(), 0));
             }
         };
         
@@ -61,25 +61,24 @@ public class FormPreviewPanel extends Panel
             @Override
             public void onDrop(AjaxRequestTarget target, Transfer transfer, Location location) throws Reject
             {
-                Page page = (Page)location.getModelObject();
+                Question question = (Question)location.getModelObject();
                 
-                System.out.println("Gonna do drop: " + page);
-                
-                form.getObject().addPageAfter(page);
+                page.getObject().createQuestionAfter(question);
                 
                 list.modelChanged();
                 
-                target.add(pageListContainer);
+                target.add(questionListContainer);
                 
                 Form mergedForm = formRepository.merge(form.getObject());
                 form.setObject(mergedForm);
             }
         };
-        dropTarget.dropTopAndBottom("div.pagee");
+        dropTarget.dropTopAndBottom("div.question");
         
-        pageListContainer.add(dropTarget);
+        questionListContainer.add(dropTarget);
         
-        pageListContainer.add(list);
-        add(pageListContainer);
+        questionListContainer.add(list);
+        add(questionListContainer);
     }
+    
 }

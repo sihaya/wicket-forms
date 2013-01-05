@@ -5,6 +5,7 @@
 package nl.desertspring.wicketforms.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -101,6 +102,9 @@ public class Form implements Serializable
         newPage.setTitle("New page " + pages.size());
         newPage.setPosition(page.getPosition() + 1);
         newPage.setForm(this);
+        newPage.setQuestions(new ArrayList<Question>());
+        Question question = newPage.createQuestionAfter(null);
+        question.setText("new question");
         
         int newIndex = pages.indexOf(newPage);
         if (newIndex != pages.size() - 1) {
@@ -110,5 +114,13 @@ public class Form implements Serializable
         }
         
         return newPage;
+    }
+
+    public Submission createSubmission()
+    {
+        Submission submission = new Submission();
+        submission.setForm(this);
+        
+        return submission;
     }
 }

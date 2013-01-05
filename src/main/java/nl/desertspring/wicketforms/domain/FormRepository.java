@@ -17,7 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class FormRepository
-{    
+{
+
     private EntityManager entityManager;
 
     @PersistenceContext
@@ -34,20 +35,34 @@ public class FormRepository
     public List<Form> findAll()
     {
         List<Form> result = entityManager.createQuery("from Form f order by f.creationDate", Form.class).getResultList();
-        
-        for(Form form : result) {
-            form.getPages().size();
+
+        for (Form form : result) {
+            init(form);
         }
-        
+
         return result;
-    }    
-    
-    public Form getById(int formId) {
+    }
+
+    public void init(Form form)
+    {
+        form.getPages().size();
+
+        for (Page page : form.getPages()) {
+            page.getQuestions().size();
+        }
+    }
+
+    public Form getById(int formId)
+    {
         return entityManager.find(Form.class, formId);
     }
 
     public Form merge(Form form)
     {
-        return entityManager.merge(form);
+        Form result = entityManager.merge(form);
+        
+        init(result);
+        
+        return result;
     }
 }

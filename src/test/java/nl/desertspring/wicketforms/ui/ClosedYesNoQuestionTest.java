@@ -4,9 +4,12 @@
  */
 package nl.desertspring.wicketforms.ui;
 
+import nl.desertspring.wicketforms.domain.Answer;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -18,7 +21,7 @@ public class ClosedYesNoQuestionTest
     @Test
     public void givenAnAnswerItRendersABooleanBox()
     {
-        WicketTester wicketTester = new WicketTester(new WicketFormsApplication()) {
+        WicketTester wicketTester = new WicketTester() {
 
             @Override
             protected String createPageMarkup(String componentId)
@@ -40,6 +43,9 @@ public class ClosedYesNoQuestionTest
         wicketTester.assertContains("No");
         
         FormTester formTester = wicketTester.newFormTester("form");
-        formTester.select("component:question", 1);
+        formTester.select("component:answer", 1);
+        formTester.submit();
+        
+        assertEquals("yes", answer.getValue());
     }
 }
