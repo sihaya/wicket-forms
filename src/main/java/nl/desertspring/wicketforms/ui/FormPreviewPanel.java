@@ -75,7 +75,7 @@ public class FormPreviewPanel extends Panel
                 form.setObject(mergedForm);
             }
         };
-        dropTarget.dropTopAndBottom("div.pagee");
+        dropTarget.dropBottom("div.page");
         
         pageListContainer.add(dropTarget);
         

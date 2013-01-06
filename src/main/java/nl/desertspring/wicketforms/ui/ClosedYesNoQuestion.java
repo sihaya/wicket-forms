@@ -5,7 +5,11 @@
 package nl.desertspring.wicketforms.ui;
 
 import nl.desertspring.wicketforms.domain.Answer;
+import nl.desertspring.wicketforms.domain.Form;
+import nl.desertspring.wicketforms.domain.FormRepository;
 import nl.desertspring.wicketforms.domain.Question;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableLabel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Radio;
 import org.apache.wicket.markup.html.form.RadioGroup;
@@ -35,11 +39,22 @@ public class ClosedYesNoQuestion extends Panel
         add(answer);
     }
 
-    public ClosedYesNoQuestion(String id, IModel<Question> model, int unused)
+    public ClosedYesNoQuestion(String id, final FormRepository formRepository, final IModel<Form> form, IModel<Question> model)
     {
         super(id, model);
         
-        add(new Label("text", new PropertyModel<String>(model, "text")));
+        add(new AjaxEditableLabel("text", new PropertyModel<String>(model, "text")) {
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target)
+            {
+                super.onSubmit(target);
+                
+                Form newForm = formRepository.merge(form.getObject());
+                form.setObject(newForm);
+            }
+            
+        });
         RadioGroup<String> answer = new RadioGroup<String>("answer", new PropertyModel<String>(this, "value"));
         
         answer.add(new Radio<String>("no", Model.of("no")));

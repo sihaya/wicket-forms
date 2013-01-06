@@ -103,9 +103,7 @@ public class Form implements Serializable
         newPage.setPosition(page.getPosition() + 1);
         newPage.setForm(this);
         newPage.setQuestions(new ArrayList<Question>());
-        Question question = newPage.createQuestionAfter(null);
-        question.setText("new question");
-        
+                
         int newIndex = pages.indexOf(newPage);
         if (newIndex != pages.size() - 1) {
             for(Page update : pages.subList(newIndex + 1, pages.size())) {

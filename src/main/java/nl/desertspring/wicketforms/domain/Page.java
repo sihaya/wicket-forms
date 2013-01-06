@@ -102,4 +102,16 @@ public class Page implements Serializable
 
         return newQuestion;
     }
+
+    public Question createQuestion()
+    {
+        Question newQuestion = new Question();
+        newQuestion.setPage(this);
+        newQuestion.setPosition(questions.size() + 1);
+        newQuestion.setText("new question");
+
+        questions.add(newQuestion);
+
+        return newQuestion;
+    }
 }

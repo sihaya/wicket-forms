@@ -26,10 +26,10 @@ public class ToolboxPanel extends Panel
         WebMarkupContainer addPage = new WebMarkupContainer("addPage", Model.of("addPage"));
         addPage.setOutputMarkupId(true);
         
-        DragSource dragSource = new DragSource(Operation.values());            
+        DragSource dragSource = new DragSource(Operation.values());
         dragSource.drag("div").initiate("div");
         
-        toolboxContainer.add(dragSource);        
+        toolboxContainer.add(dragSource);
         
         toolboxContainer.add(addPage);
         

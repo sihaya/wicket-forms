@@ -26,7 +26,7 @@ import wicketdnd.*;
  */
 public class QuestionPreviewPanel extends Panel
 {
-
+    
     public QuestionPreviewPanel(String id, final FormRepository formRepository, final IModel<Form> form, final IModel<Page> page)
     {
         super(id, page);
@@ -34,7 +34,7 @@ public class QuestionPreviewPanel extends Panel
         final WebMarkupContainer questionListContainer = new WebMarkupContainer("questionListContainer");
         final ListView<Question> list = new ListView<Question>("questionList", new SortedSetListModel(new PropertyModel<List<Page>>(page, "questions")))
         {
-
+            
             @Override
             protected ListItem<Question> newItem(int index, IModel<Question> itemModel)
             {
@@ -45,23 +45,41 @@ public class QuestionPreviewPanel extends Panel
                 return item;
             }
             
-
             @Override
             protected void populateItem(ListItem<Question> item)
-            {   
-                item.add(new ClosedYesNoQuestion("component", item.getModel(), 0));
+            {                
+                item.add(new ClosedYesNoQuestion("component", formRepository, form, item.getModel()));
             }
         };
         
         list.setOutputMarkupId(true);
-
-        DropTarget dropTarget = new DropTarget(Operation.values())
+        
+        WebMarkupContainer questionFirst = new WebMarkupContainer("questionFirst");        
+        DropTarget dropTargetFirst = new DropTarget(Operation.values())
         {
-
+            
             @Override
             public void onDrop(AjaxRequestTarget target, Transfer transfer, Location location) throws Reject
             {
-                Question question = (Question)location.getModelObject();
+                page.getObject().createQuestion();
+                
+                list.modelChanged();
+                
+                target.add(questionListContainer);
+                
+                Form mergedForm = formRepository.merge(form.getObject());
+                form.setObject(mergedForm);
+            }
+        };
+        dropTargetFirst.dropTop("div.drop-first-question");
+        
+        DropTarget dropTargetOthers = new DropTarget(Operation.values())
+        {
+            
+            @Override
+            public void onDrop(AjaxRequestTarget target, Transfer transfer, Location location) throws Reject
+            {
+                Question question = (Question) location.getModelObject();
                 
                 page.getObject().createQuestionAfter(question);
                 
@@ -73,12 +91,16 @@ public class QuestionPreviewPanel extends Panel
                 form.setObject(mergedForm);
             }
         };
-        dropTarget.dropTopAndBottom("div.question");
+        dropTargetOthers.dropTopAndBottom("div.drop-question");        
         
-        questionListContainer.add(dropTarget);
-        
+        questionFirst.add(dropTargetFirst);
+        questionListContainer.add(dropTargetOthers);
+                
         questionListContainer.add(list);
+        
+        questionListContainer.setOutputMarkupId(true);
+        
+        add(questionFirst);
         add(questionListContainer);
     }
-    
 }
