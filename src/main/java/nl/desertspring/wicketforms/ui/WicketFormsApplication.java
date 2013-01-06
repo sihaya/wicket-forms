@@ -18,7 +18,7 @@ public class WicketFormsApplication extends WebApplication
     @Override
     public Class<? extends Page> getHomePage()
     {
-        return FormOverviewPage.class;
+        return HomePage.class;
     }
 
     @Override

@@ -118,7 +118,21 @@ public class Form implements Serializable
     {
         Submission submission = new Submission();
         submission.setForm(this);
+        submission.setAnswers(new ArrayList<Answer>());
         
         return submission;
     }
+
+    public Page getStartPage()
+    {
+        return pages.get(0);
+    }
+
+    @Override
+    public String toString()
+    {
+        return name;
+    }
+    
+    
 }

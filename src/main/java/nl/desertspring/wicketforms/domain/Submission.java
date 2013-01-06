@@ -6,6 +6,7 @@ package nl.desertspring.wicketforms.domain;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +29,7 @@ public class Submission implements Serializable
     @JoinColumn
     @ManyToOne
     private Form form;
-    @OneToMany(mappedBy = "submission")
+    @OneToMany(mappedBy = "submission", cascade = CascadeType.ALL)
     private List<Answer> answers;
 
     public Integer getSubmissionId()
@@ -53,16 +54,20 @@ public class Submission implements Serializable
 
     public Answer getAnswer(Question question)
     {
-        for(Answer answer : answers) {
+        System.out.println(question);
+
+        for (Answer answer : answers) {
+            System.out.println(answer.getQuestion());
+
             if (answer.getQuestion().getQuestionId() == question.getQuestionId()) {
                 return answer;
             }
         }
-        
+
         Answer answer = new Answer();
         answer.setQuestion(question);
         answers.add(answer);
-        
+
         return answer;
     }
 

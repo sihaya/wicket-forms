@@ -114,4 +114,9 @@ public class Page implements Serializable
 
         return newQuestion;
     }
+
+    public boolean isLast()
+    {
+        return false;
+    }
 }
