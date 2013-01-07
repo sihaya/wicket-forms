@@ -119,6 +119,7 @@ public class Form implements Serializable
         Submission submission = new Submission();
         submission.setForm(this);
         submission.setAnswers(new ArrayList<Answer>());
+        submission.setSubmitted(false);
         
         return submission;
     }
@@ -134,5 +135,19 @@ public class Form implements Serializable
         return name;
     }
     
+    public Page getNextPage(Page page) {
+        if (page.isLast()) {
+            throw new IllegalStateException("Cannot get next page of last page");
+        }
+        
+        return pages.get(pages.indexOf(page) + 1);
+    }
     
+    public Page getPreviousPage(Page page) {
+        if (page.isFirst()) {
+            throw new IllegalStateException("Cannot get previous page of first page");            
+        }
+        
+        return pages.get(pages.indexOf(page) - 1);
+    }
 }

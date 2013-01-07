@@ -32,7 +32,7 @@ public class FormSubmissionPanel extends Panel
     public FormSubmissionPanel(String id, final SubmissionRepository submissionRepository, final IModel<Submission> submission)
     {
         super(id, submission);
-        
+
         this.currentPage = new Model();
         this.submission = submission;
 
@@ -40,6 +40,17 @@ public class FormSubmissionPanel extends Panel
 
         form.add(new Button("submit")
         {
+
+            @Override
+            public void onSubmit()
+            {
+                submission.getObject().submit();
+                
+                submission.setObject(submissionRepository.merge(submission.getObject()));
+                
+                setResponsePage(new SubmissionDonePage(submission));
+            }
+            
 
             @Override
             protected void onConfigure()
@@ -57,14 +68,39 @@ public class FormSubmissionPanel extends Panel
             public void onSubmit()
             {
                 submission.setObject(submissionRepository.merge(submission.getObject()));
+
+                currentPage.setObject(submission.getObject().getForm().getNextPage(currentPage.getObject()));
+            }
+
+            @Override
+            protected void onConfigure()
+            {
+                super.onConfigure();
+
+                setVisible(!currentPage.getObject().isLast());
             }
         });
-        
-        form.add(new Button("previous") {
-            
-        });
-        
-        ListView<Question> questionList = new ListView<Question>("questionList", new PropertyModel<List<Question>>(currentPage, "questions")) {
+
+        form.add(new Button("previous")
+        {
+
+            @Override
+            public void onSubmit()
+            {
+                currentPage.setObject(submission.getObject().getForm().getPreviousPage(currentPage.getObject()));
+            }
+
+            @Override
+            protected void onConfigure()
+            {
+                super.onConfigure();
+
+                setVisible(!currentPage.getObject().isFirst());
+            }
+        }.setDefaultFormProcessing(true));
+
+        ListView<Question> questionList = new ListView<Question>("questionList", new PropertyModel<List<Question>>(currentPage, "questions"))
+        {
 
             @Override
             protected void populateItem(ListItem<Question> item)
@@ -72,7 +108,7 @@ public class FormSubmissionPanel extends Panel
                 item.add(new ClosedYesNoQuestion("question", new AnswerModel(submission, item.getModelObject())));
             }
         };
-        
+
         form.add(new Label("pageTitle", new PropertyModel<String>(currentPage, "title")));
         form.add(questionList);
 

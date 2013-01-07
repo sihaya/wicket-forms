@@ -25,6 +25,10 @@ public class SubmissionRepository
     {
         Submission mergedSubmission = entityManager.merge(submission);
         mergedSubmission.getAnswers().size();
+                
+        for(Page page : mergedSubmission.getForm().getPages()) {
+            page.getQuestions().size();
+        }
         
         return mergedSubmission;
     }

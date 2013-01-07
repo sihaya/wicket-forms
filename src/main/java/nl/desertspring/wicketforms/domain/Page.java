@@ -117,6 +117,34 @@ public class Page implements Serializable
 
     public boolean isLast()
     {
-        return false;
+        return form.getPages().indexOf(this) == form.getPages().size() - 1;
+    }
+    
+    public boolean isFirst() {
+        return form.getPages().indexOf(this) == 0;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof Page)) {
+            return false;
+        }
+        
+        Page rhs = (Page) obj;
+        
+        if (pageId != null) {
+            return pageId == rhs.pageId;
+        } else {
+            return super.equals(obj);
+        }        
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 67 * hash + (this.pageId != null ? this.pageId.hashCode() : 0);
+        return hash;
     }
 }

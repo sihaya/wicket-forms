@@ -46,5 +46,5 @@ public class FormTest
         Submission submission = form.createSubmission();
         
         assertEquals(form, submission.getForm());
-    }    
+    }        
 }
