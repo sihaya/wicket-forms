@@ -27,7 +27,7 @@ public class ToolboxPanel extends Panel
         addPage.setOutputMarkupId(true);
         
         DragSource dragSource = new DragSource(Operation.values());
-        dragSource.drag("div").initiate("div");
+        dragSource.drag("a.drop-tool").initiate("a.drop-tool");
         
         toolboxContainer.add(dragSource);
         

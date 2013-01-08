@@ -6,14 +6,13 @@ package nl.desertspring.wicketforms.ui;
 
 import java.util.Arrays;
 import nl.desertspring.wicketforms.domain.Form;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.*;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 
 /**
@@ -27,7 +26,7 @@ public class FormListPanel extends Panel
     {
         super(id);
 
-        IColumn nameColumn = new PropertyColumn(new ResourceModel("label.name"), "name")
+        IColumn nameColumn = new PropertyColumn(Model.of(getLocalizer().getString("label.name", this)), "name")
         {
 
             @Override
@@ -44,9 +43,12 @@ public class FormListPanel extends Panel
                 });
             }
         };
-        IColumn creationDateColumn = new PropertyColumn(new ResourceModel("label.creationDate"), "creationDate");
+        IColumn creationDateColumn = new PropertyColumn(Model.of(getLocalizer().getString("label.creationDate", this)), "creationDate");
 
-
-        add(new DataTable("formList", Arrays.asList(nameColumn, creationDateColumn), model, 999999));
+        DataTable dataTable = new DataTable("formList", Arrays.asList(nameColumn, creationDateColumn), model, 999999);
+        dataTable.addTopToolbar(new HeadersToolbar(dataTable, null));
+        dataTable.addBottomToolbar(new NoRecordsToolbar(dataTable));
+        
+        add(dataTable);
     }
 }

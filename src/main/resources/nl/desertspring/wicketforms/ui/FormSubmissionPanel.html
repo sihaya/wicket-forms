@@ -1,6 +1,6 @@
 <wicket:panel>
     <form wicket:id="form">
-        <h1 wicket:id="pageTitle">Page title</h1>
+        <h2 wicket:id="pageTitle">Page title</h2>
 
         <div class="submission-questions">
             <div class="submission-question" wicket:id="questionList">
@@ -8,10 +8,10 @@
             </div>
         </div>
 
-        <div class="actions">
-            <input type="submit" value="Previous" wicket:id="previous"/>
-            <input type="submit" value="Next" wicket:id="next"/>
-            <input type="submit" value="Submit" wicket:id="submit"/>
+        <div class="form-actions">
+            <button type="submit" class="btn" wicket:id="previous">Previous</button>
+            <button type="submit" class="btn btn-primary" wicket:id="next">Next</button>
+            <button type="submit" value="" class="btn btn-primary" wicket:id="submit">Submit</button>
         </div>
     </form>
 </wicket:panel>

@@ -3,15 +3,19 @@
         <title>FormPreviewPanel</title>
     </head>
     <body>
-        
+
     </body>
     <wicket:panel>
+        <p class="muted">To add a new page, click or drag a page icon from the toolbox</p>
+
         <div id="formPreviewPanel" wicket:id="pageListContainer">
             <div class="page" wicket:id="pageList">                
-                <h2 wicket:id="title"></h2>
-                
-                <div id="question" wicket:id="questionPreviewPanel">
-                </div>
+                <h2 wicket:id="title" class="inline-editable"></h2>
+                <p class="muted">To add a new question, click or drag a question from the toolbox.</p>
+                <form class="horizontal-form">
+                    <div id="question" wicket:id="questionPreviewPanel">
+                    </div>
+                </form>
             </div>
         </div>
     </wicket:panel>

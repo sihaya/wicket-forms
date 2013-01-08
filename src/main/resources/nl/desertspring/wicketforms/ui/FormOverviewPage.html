@@ -1,17 +1,30 @@
 <wicket:extend id="content">
-    <h1>Overview of all forms</h1>
-    <wicket:container wicket:id="formListPanel"/>
-    
-    <form wicket:id="newForm">
-        <fieldset>
-            <legend>Add new form</legend>
-            
-            <label>Form name</label>
-            <input type="text" name="name" wicket:id="name"/>
-            
-            <p>
-                <input type="submit" value="Add new form"/>
-            </p>
-        </fieldset>        
-    </form>
+    <div class="container container-background">
+        <div class="row">            
+            <div class="span11">
+                <div class="page-header">
+                    <h1>Form overview</h1>
+                </div>
+
+                <section>
+                    <div class="well">
+                        <form wicket:id="newForm">
+                            <fieldset>
+                                <legend>Add new form</legend>
+
+                                <label>Form name</label>
+                                <input type="text" name="name" wicket:id="name" placeholder="Enter a descriptive text"/>
+                                <span class="help-block">This name is used for identifying the form.</span>
+                                <p>
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </p>
+                            </fieldset>        
+                        </form>
+                    </div>
+                
+                    <wicket:container wicket:id="formListPanel"/>
+                </section>
+            </div>
+        </div>
+    </div>
 </wicket:extend>

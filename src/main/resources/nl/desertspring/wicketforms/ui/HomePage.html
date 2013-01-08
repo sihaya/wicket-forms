@@ -1,6 +1,18 @@
-<wicket:extend id="content">
-    <h1>Wicket Forms</h1>
-    
-    <a href="" wicket:id="edit">Edit forms</a><br>
-    <a href="" wicket:id="take">Submit a form</a>
+<wicket:extend id="content">    
+    <div class="container container-home">
+        <div class="hero-unit">
+            <h1>Welcome to Wicket Forms</h1>
+            <p>Wicket Forms is a web application for creating and submitting electronic forms. Create electronic forms 
+                from your web browser in the form editor. Allow submitters to easily submit a form through their browser. </p>
+            <p>Get started by choosing edit form below</p>
+
+        </div>
+
+        <form class="form-signin">            
+            <h2 class="form-signin-heading">Please choose your action</h2>
+
+            <button class="btn btn-large btn-block" type="submit" wicket:id="edit">I want to edit a form</button>
+            <button class="btn btn-primary btn-large btn-block" type="submit" wicket:id="take">I want to submit a form</button>
+        </form>
+    </div>
 </wicket:extend>
