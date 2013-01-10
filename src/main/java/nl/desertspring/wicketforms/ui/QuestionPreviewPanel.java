@@ -26,80 +26,92 @@ import wicketdnd.*;
  */
 public class QuestionPreviewPanel extends Panel
 {
-    
+
     public QuestionPreviewPanel(String id, final FormRepository formRepository, final IModel<Form> form, final IModel<Page> page)
     {
         super(id, page);
-        
+
         final WebMarkupContainer questionListContainer = new WebMarkupContainer("questionListContainer");
         final ListView<Question> list = new ListView<Question>("questionList", new SortedSetListModel(new PropertyModel<List<Page>>(page, "questions")))
         {
-            
+
             @Override
             protected ListItem<Question> newItem(int index, IModel<Question> itemModel)
             {
                 ListItem<Question> item = super.newItem(index, itemModel);
-                
+
                 item.setOutputMarkupId(true);
-                
+
                 return item;
             }
-            
+
             @Override
             protected void populateItem(ListItem<Question> item)
-            {                
+            {
                 item.add(new ClosedYesNoQuestion("component", formRepository, form, item.getModel()));
             }
         };
-        
+
         list.setOutputMarkupId(true);
-        
-        WebMarkupContainer questionFirst = new WebMarkupContainer("questionFirst");        
+
+        WebMarkupContainer questionFirst = new WebMarkupContainer("questionFirst");
         DropTarget dropTargetFirst = new DropTarget(Operation.values())
         {
-            
+
             @Override
             public void onDrop(AjaxRequestTarget target, Transfer transfer, Location location) throws Reject
             {
                 page.getObject().createQuestion();
-                
+
                 list.modelChanged();
-                
+
                 target.add(questionListContainer);
-                
+
                 Form mergedForm = formRepository.merge(form.getObject());
                 form.setObject(mergedForm);
             }
+
+            @Override
+            public String[] getTypes()
+            {
+                return new String[]{"question"};
+            }
         };
-        dropTargetFirst.dropTop("div.drop-first-question");
-        
+        dropTargetFirst.dropCenter("div.drop-first-question");
+
         DropTarget dropTargetOthers = new DropTarget(Operation.values())
         {
-            
+
             @Override
             public void onDrop(AjaxRequestTarget target, Transfer transfer, Location location) throws Reject
             {
                 Question question = (Question) location.getModelObject();
-                
+
                 page.getObject().createQuestionAfter(question);
-                
+
                 list.modelChanged();
-                
+
                 target.add(questionListContainer);
-                
+
                 Form mergedForm = formRepository.merge(form.getObject());
                 form.setObject(mergedForm);
             }
+
+            @Override
+            public String[] getTypes()
+            {
+                return new String[]{"question"};
+            }
         };
-        dropTargetOthers.dropTopAndBottom("div.drop-question");        
-        
+        dropTargetOthers.dropBottom("div.drop-question");
+
         questionFirst.add(dropTargetFirst);
         questionListContainer.add(dropTargetOthers);
-                
+
         questionListContainer.add(list);
-        
+
         questionListContainer.setOutputMarkupId(true);
-        
+
         add(questionFirst);
         add(questionListContainer);
     }

@@ -89,6 +89,12 @@ public class FormPreviewPanel extends Panel
 
                 saveForm();
             }
+
+            @Override
+            public String[] getTypes()
+            {
+                return new String[] { "page" };
+            }            
         };
         dropTarget.dropBottom("div.page");
 

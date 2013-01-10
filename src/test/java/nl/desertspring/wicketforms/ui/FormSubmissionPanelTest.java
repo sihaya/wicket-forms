@@ -140,7 +140,7 @@ public class FormSubmissionPanelTest
         verify(submission).submit();
         verify(submissionRepository).merge(submission);
                 
-        wicketTester.assertContains("your form has been submitted with id.*32423");
+        wicketTester.assertContains("Your form has been submitted with id.*32423");
     }
 
     private void pageSwitchTest(String command, String assertion)

@@ -20,19 +20,53 @@ public class ToolboxPanel extends Panel
     public ToolboxPanel(String id)
     {
         super(id);
-        
-        WebMarkupContainer toolboxContainer = new WebMarkupContainer("toolboxContainer");
-                
-        WebMarkupContainer addPage = new WebMarkupContainer("addPage", Model.of("addPage"));
+
+        addPage();
+        addYesNoQuestion();
+
+    }
+    
+    private void addYesNoQuestion()
+    {
+        WebMarkupContainer addClosedYesNoQuestionContainer = new WebMarkupContainer("addClosedYesNoQuestionContainer");
+        WebMarkupContainer addClosedYesNoQuestion = new WebMarkupContainer("addClosedYesNoQuestion");
+        addClosedYesNoQuestion.setOutputMarkupId(true);
+        addClosedYesNoQuestionContainer.add(addClosedYesNoQuestion);
+
+        DragSource addClosedYesNoQuestionDragSource = new DragSource(Operation.values())
+        {
+
+            @Override
+            public String[] getTypes()
+            {
+                return new String[]{"question"};
+            }
+        };
+        addClosedYesNoQuestionDragSource.drag("a.add-closedyesnoquestion").initiate("a.add-closedyesnoquestion");
+        addClosedYesNoQuestionContainer.add(addClosedYesNoQuestionDragSource);
+
+        add(addClosedYesNoQuestionContainer);
+    }
+
+    private void addPage()
+    {
+        WebMarkupContainer addPageContainer = new WebMarkupContainer("addPageContainer");
+        WebMarkupContainer addPage = new WebMarkupContainer("addPage");
         addPage.setOutputMarkupId(true);
+        addPageContainer.add(addPage);
+
+        DragSource addPageDragSource = new DragSource(Operation.values())
+        {
+
+            @Override
+            public String[] getTypes()
+            {
+                return new String[]{"page"};
+            }
+        };
+        addPageDragSource.drag("a.add-page").initiate("a.add-page");
+        addPageContainer.add(addPageDragSource);
         
-        DragSource dragSource = new DragSource(Operation.values());
-        dragSource.drag("a.drop-tool").initiate("a.drop-tool");
-        
-        toolboxContainer.add(dragSource);
-        
-        toolboxContainer.add(addPage);
-        
-        add(toolboxContainer);
+        add(addPageContainer);
     }
 }

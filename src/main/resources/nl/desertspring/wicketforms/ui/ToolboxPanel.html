@@ -1,17 +1,21 @@
 <wicket:head>
     <script type="text/javascript">
         jQuery(document).ready(function() {
-            jQuery('#add-page').tooltip()            
+            jQuery('.btn-group a').tooltip()                        
         })
         
     </script>
 </wicket:head>
 <wicket:panel>
-    <div id="toolbox" wicket:id="toolboxContainer">
+    <div id="toolbox" >
         <h4>Toolbox</h4>
         <div class="btn-group">
-            <a id="add-page" class="btn drop-tool" href="#" wicket:id="addPage" title="Add a new page"><i class="icon-file"></i></a>
-            <a class="btn" href="#"><i class="icon-check"></i></a>  
+            <span wicket:id="addPageContainer">
+                <a class="btn drop-tool add-page" href="#" wicket:id="addPage" title="New page"><i class="icon-file"></i></a>
+            </span>
+            <span wicket:id="addClosedYesNoQuestionContainer">
+                <a class="btn drop-tool add-closedyesnoquestion" href="#" wicket:id="addClosedYesNoQuestion" title="New yes or no question"><i class="icon-check"></i></a>  
+            </span>
         </div>
     </div>
 </wicket:panel>

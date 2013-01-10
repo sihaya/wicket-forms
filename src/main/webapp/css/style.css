@@ -48,3 +48,7 @@ div.container-background {
 .form-editor .inline-editable:hover {
     background-color: yellow;
 }
+
+.form-editor .drop-question:hover {
+    background-color: yellow;
+}
