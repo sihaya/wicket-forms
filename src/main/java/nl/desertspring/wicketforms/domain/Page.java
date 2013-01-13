@@ -91,24 +91,26 @@ public class Page implements Serializable
         this.questions = questions;
     }
 
-    public Question createQuestionAfter(Question question)
+    public Question createQuestionAfter(Question question, Question.Type type)
     {
         Question newQuestion = new Question();
         newQuestion.setPage(this);
         newQuestion.setPosition(questions.size() + 1);
         newQuestion.setText("new question");
+        newQuestion.setType(type);
 
         questions.add(newQuestion);
 
         return newQuestion;
     }
 
-    public Question createQuestion()
+    public Question createQuestion(Question.Type type)
     {
         Question newQuestion = new Question();
         newQuestion.setPage(this);
         newQuestion.setPosition(questions.size() + 1);
         newQuestion.setText("new question");
+        newQuestion.setType(type);
 
         questions.add(newQuestion);
 

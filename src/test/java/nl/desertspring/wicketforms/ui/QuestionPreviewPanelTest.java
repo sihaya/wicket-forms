@@ -25,6 +25,7 @@ public class QuestionPreviewPanelTest
         WicketTester wicketTester = new WicketTester();
         
         Question question = mock(Question.class);
+        when(question.getType()).thenReturn(Question.Type.CLOSED_YES_NO);
         Page page = mock(Page.class);
         when(page.getQuestions()).thenReturn(Arrays.asList(question));
         

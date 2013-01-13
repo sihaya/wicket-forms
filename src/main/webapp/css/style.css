@@ -52,3 +52,7 @@ div.container-background {
 .form-editor .drop-question:hover {
     background-color: yellow;
 }
+
+.form-editor .drop-question, .submission-question {
+    margin-bottom: 10px;
+}

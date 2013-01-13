@@ -45,12 +45,11 @@ public class FormSubmissionPanel extends Panel
             public void onSubmit()
             {
                 submission.getObject().submit();
-                
+
                 submission.setObject(submissionRepository.merge(submission.getObject()));
-                
+
                 setResponsePage(new SubmissionDonePage(submission));
             }
-            
 
             @Override
             protected void onConfigure()
@@ -105,7 +104,22 @@ public class FormSubmissionPanel extends Panel
             @Override
             protected void populateItem(ListItem<Question> item)
             {
-                item.add(new ClosedYesNoQuestion("question", new AnswerModel(submission, item.getModelObject())));
+                Panel component;
+
+                AnswerModel model = new AnswerModel(submission, item.getModelObject());
+
+                switch (item.getModelObject().getType()) {
+                    case CLOSED_YES_NO:
+                        component = new ClosedYesNoQuestion("question", model);
+                        break;
+                    case OPEN:
+                        component = new OpenQuestion("question", model);
+                        break;
+                    default:
+                        throw new IllegalStateException("Unknown component");
+                }
+
+                item.add(component);
             }
         };
 

@@ -37,7 +37,7 @@ public class FormSubmissionPanelTest
         submission = mock(Submission.class);
 
         Question question1 = mock(Question.class);
-
+        when(question1.getType()).thenReturn(Question.Type.CLOSED_YES_NO);
         when(question1.getText()).thenReturn(questionText);
 
         page1 = mock(Page.class);

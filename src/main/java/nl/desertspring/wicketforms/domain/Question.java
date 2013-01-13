@@ -5,6 +5,7 @@
 package nl.desertspring.wicketforms.domain;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,9 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Question implements Serializable
 {
+    public enum Type {
+        CLOSED_YES_NO, OPEN
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +33,9 @@ public class Question implements Serializable
     @JoinColumn
     @ManyToOne
     private Page page;
+    
+    @Column(nullable = false)
+    private Type type;
 
     /**
      * @return the questionId
@@ -81,4 +88,17 @@ public class Question implements Serializable
     {
         this.page = page;
     }
+
+    public Type getType()
+    {
+        return type;
+    }
+
+    public void setType(Type type)
+    {
+        this.type = type;
+    }
+    
+    
+    
 }

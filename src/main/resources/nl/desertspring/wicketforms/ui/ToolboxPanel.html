@@ -9,13 +9,22 @@
 <wicket:panel>
     <div id="toolbox" >
         <h4>Toolbox</h4>
-        <div class="btn-group">
-            <span wicket:id="addPageContainer">
-                <a class="btn drop-tool add-page" href="#" wicket:id="addPage" title="New page"><i class="icon-file"></i></a>
-            </span>
-            <span wicket:id="addClosedYesNoQuestionContainer">
-                <a class="btn drop-tool add-closedyesnoquestion" href="#" wicket:id="addClosedYesNoQuestion" title="New yes or no question"><i class="icon-check"></i></a>  
-            </span>
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <span wicket:id="addPageContainer">
+                    <a class="btn drop-tool add-page" href="#" wicket:id="addPage" title="New page"><i class="icon-file"></i></a>
+                </span>
+                <span wicket:id="addClosedYesNoQuestionContainer">
+                    <a class="btn drop-tool add-closedyesnoquestion" href="#" wicket:id="addClosedYesNoQuestion" title="New yes or no question"><i class="icon-check"></i></a>  
+                </span>            
+            </div>            
+        </div>
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <span wicket:id="addOpenQuestionContainer">
+                    <a class="btn drop-tool add-openquestion" href="#" wicket:id="addOpenQuestion" title="New open question"><i class="icon-align-justify"></i></a>  
+                </span>
+            </div>
         </div>
     </div>
 </wicket:panel>

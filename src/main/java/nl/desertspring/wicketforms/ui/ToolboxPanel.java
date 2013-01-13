@@ -4,11 +4,16 @@
  */
 package nl.desertspring.wicketforms.ui;
 
+import nl.desertspring.wicketforms.domain.Question;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import wicketdnd.DragSource;
 import wicketdnd.Operation;
+import wicketdnd.Reject;
+import wicketdnd.Transfer;
 
 /**
  *
@@ -23,7 +28,31 @@ public class ToolboxPanel extends Panel
 
         addPage();
         addYesNoQuestion();
+        addOpenQuestion();
 
+    }
+    
+    private void addOpenQuestion()
+    {
+        WebMarkupContainer addOpenQuestionContainer = new WebMarkupContainer("addOpenQuestionContainer");
+        WebMarkupContainer addOpenQuestion = new WebMarkupContainer("addOpenQuestion");
+        addOpenQuestion.setOutputMarkupId(true);
+        addOpenQuestionContainer.add(addOpenQuestion);
+
+        DragSource addOpenQuestionDragSource = new DragSource(Operation.values())
+        {
+
+            @Override
+            public String[] getTypes()
+            {
+                return new String[]{"question"};
+            }
+        };
+        addOpenQuestionDragSource.drag("a.add-openquestion").initiate("a.add-openquestion");
+        addOpenQuestionContainer.add(addOpenQuestionDragSource);
+        addOpenQuestion.setDefaultModel(Model.of(Question.Type.OPEN));
+
+        add(addOpenQuestionContainer);
     }
     
     private void addYesNoQuestion()
@@ -44,6 +73,7 @@ public class ToolboxPanel extends Panel
         };
         addClosedYesNoQuestionDragSource.drag("a.add-closedyesnoquestion").initiate("a.add-closedyesnoquestion");
         addClosedYesNoQuestionContainer.add(addClosedYesNoQuestionDragSource);
+        addClosedYesNoQuestion.setDefaultModel(Model.of(Question.Type.CLOSED_YES_NO));
 
         add(addClosedYesNoQuestionContainer);
     }

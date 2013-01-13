@@ -48,7 +48,20 @@ public class QuestionPreviewPanel extends Panel
             @Override
             protected void populateItem(ListItem<Question> item)
             {
-                item.add(new ClosedYesNoQuestion("component", formRepository, form, item.getModel()));
+                Panel component;
+
+                switch (item.getModelObject().getType()) {
+                    case CLOSED_YES_NO:
+                        component = new ClosedYesNoQuestion("component", formRepository, form, item.getModel());
+                        break;
+                    case OPEN:
+                        component = new OpenQuestion("component", formRepository, form, item.getModel());
+                        break;
+                    default:
+                        throw new IllegalStateException("Unknown component");
+                }
+
+                item.add(component);
             }
         };
 
@@ -61,7 +74,12 @@ public class QuestionPreviewPanel extends Panel
             @Override
             public void onDrop(AjaxRequestTarget target, Transfer transfer, Location location) throws Reject
             {
-                page.getObject().createQuestion();
+                System.out.println("the data: " + transfer.getData());
+                if (transfer.getData() == null) {
+                    return;
+                }
+                
+                page.getObject().createQuestion(transfer.<Question.Type>getData());
 
                 list.modelChanged();
 
@@ -87,7 +105,7 @@ public class QuestionPreviewPanel extends Panel
             {
                 Question question = (Question) location.getModelObject();
 
-                page.getObject().createQuestionAfter(question);
+                page.getObject().createQuestionAfter(question, transfer.<Question.Type>getData());
 
                 list.modelChanged();
 

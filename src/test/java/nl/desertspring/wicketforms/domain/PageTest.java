@@ -22,7 +22,7 @@ public class PageTest
         Page page = new Page();
         Question question = mock(Question.class);
         
-        Question newQuestion = page.createQuestionAfter(question);
+        Question newQuestion = page.createQuestionAfter(question, Question.Type.CLOSED_YES_NO);
         
         assertThat(page.getQuestions(), hasItem(newQuestion));
     }
