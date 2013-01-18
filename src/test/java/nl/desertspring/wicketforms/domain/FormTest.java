@@ -47,4 +47,14 @@ public class FormTest
         
         assertEquals(form, submission.getForm());
     }        
+    
+    @Test
+    public void givenAFormCreateInvitationReturnsInvitation() {
+        Form form = new Form();
+        form.setInvitations(new ArrayList<Invitation>());
+        
+        Invitation invitation = form.createInvitation();
+        
+        assertThat(form.getInvitations(), hasItem(invitation));
+    }
 }

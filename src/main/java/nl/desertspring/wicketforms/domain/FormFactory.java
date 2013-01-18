@@ -4,6 +4,7 @@
  */
 package nl.desertspring.wicketforms.domain;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
@@ -20,6 +21,7 @@ public class FormFactory
         Form form = new Form();
         form.setName(name);
         form.setCreationDate(new Date());
+        form.setInvitations(new ArrayList<Invitation>());
         
         Page page = new Page();
         page.setForm(form);

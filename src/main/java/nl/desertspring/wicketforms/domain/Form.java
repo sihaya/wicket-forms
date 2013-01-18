@@ -40,7 +40,11 @@ public class Form implements Serializable
     @OrderBy("position")
     @OneToMany(mappedBy = "form", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Page> pages;
-
+    
+    @OrderBy("sentAt")
+    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL)
+    private List<Invitation> invitations;
+    
     /**
      * @return the formId
      */
@@ -150,4 +154,26 @@ public class Form implements Serializable
         
         return pages.get(pages.indexOf(page) - 1);
     }
+
+    public Invitation createInvitation()
+    {
+        Invitation invitation = new Invitation();
+        invitation.setForm(this);
+        
+        invitations.add(invitation);
+        
+        return invitation;
+    }
+
+    public List<Invitation> getInvitations()
+    {
+        return invitations;
+    }
+
+    public void setInvitations(List<Invitation> invitations)
+    {
+        this.invitations = invitations;
+    }
+    
+    
 }
