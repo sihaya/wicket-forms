@@ -19,18 +19,15 @@ public class InvitationTest
     @Test
     public void givenAnInvitationItSendsOutEmail()
     {
-        EmailService emailService = mock(EmailService.class);
-
         Invitation invitation = new Invitation();
 
         String email = "someone@test.lan";
         invitation.setEmailAddress(email);
         invitation.setMessage("Hello there");
 
-        invitation.send("http://www.wicketforms.com/submit", emailService);
+        invitation.prepareForSend();
 
-        verify(emailService).send(eq(email), anyString(), anyString());
-        
         assertNotNull(invitation.getSecret());
+        assertNotNull(invitation.getSentAt());
     }
 }

@@ -28,7 +28,7 @@ public class Invitation implements Serializable
     private Submission submission;
     @Column(nullable = false)
     private String emailAddress;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 65535)
     private String message;
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -132,12 +132,9 @@ public class Invitation implements Serializable
         this.sentAt = sentAt;
     }
 
-    public void send(String url, EmailService emailService)
+    public void prepareForSend()
     {
         secret = UUID.randomUUID().toString();
-
-        emailService.send(emailAddress, "Invitation for filling out a form",
-                message + "\n\n" + "Please fill out the form here: " + url + secret);
 
         sentAt = new Date();
     }
@@ -150,5 +147,5 @@ public class Invitation implements Serializable
     public void setSecret(String secret)
     {
         this.secret = secret;
-    }    
+    }
 }

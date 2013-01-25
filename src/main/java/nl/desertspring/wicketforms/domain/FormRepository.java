@@ -50,6 +50,8 @@ public class FormRepository
         for (Page page : form.getPages()) {
             page.getQuestions().size();
         }
+        
+        form.getInvitations().size();
     }
 
     public Form getById(int formId)

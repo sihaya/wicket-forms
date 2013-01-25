@@ -55,9 +55,4 @@
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="smtp.caiway.nl"/>
     </bean>
-
-    <!-- this is a template message that we can pre-load with default state -->
-    <bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
-        <property name="from" value="no-reply@desert-spring.nl"/>
-    </bean>
 </beans>
