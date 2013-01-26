@@ -4,6 +4,8 @@
  */
 package nl.desertspring.wicketforms.ui;
 
+import java.util.Arrays;
+import java.util.Date;
 import nl.desertspring.wicketforms.domain.Form;
 import nl.desertspring.wicketforms.domain.Invitation;
 import nl.desertspring.wicketforms.domain.InvitationService;
@@ -42,5 +44,27 @@ public class SendInvitationPanelTest
         
         verify(invitationService).persistAndSend(invitation);
         verify(invitation).setEmailAddress(emailAddress);
+    }
+    
+    @Test
+    public void givenAFormItRendersAListOfInvitations() {
+         WicketTester wicketTester = new WicketTester();
+         
+         Invitation invitation1 = mock(Invitation.class);
+        final String emailAddress = "test@test.lan";
+         when(invitation1.getEmailAddress()).thenReturn(emailAddress);
+         when(invitation1.getSentAt()).thenReturn(new Date(0));
+                           
+         Form form = mock(Form.class);
+         when(form.getInvitations()).thenReturn(Arrays.asList(invitation1));
+         
+         SendInvitationPanel sendInvitationPanel = new SendInvitationPanel("component", mock(InvitationService.class), Model.of(form));
+         
+         wicketTester.startComponentInPage(sendInvitationPanel);
+         
+         wicketTester.assertContains("Email address");
+         wicketTester.assertContains("Sent date");
+         wicketTester.assertContains(emailAddress);
+         wicketTester.assertContains("1/1/70");
     }
 }

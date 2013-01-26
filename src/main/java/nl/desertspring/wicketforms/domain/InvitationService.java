@@ -46,7 +46,7 @@ public class InvitationService
 
     @Transactional
     public void persistAndSend(Invitation invitation)
-    {
+    {                
         invitation.setMessage("");
         invitation.prepareForSend();
         String message = generateMessage(invitation);

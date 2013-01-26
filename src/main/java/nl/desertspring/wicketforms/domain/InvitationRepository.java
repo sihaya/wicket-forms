@@ -27,5 +27,7 @@ public class InvitationRepository
     
     public void persist(Invitation invitation) {
         entityManager.persist(invitation);
+        
+        invitation.getForm().getInvitations().add(invitation);
     }
 }

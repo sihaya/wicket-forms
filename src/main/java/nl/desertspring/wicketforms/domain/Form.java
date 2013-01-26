@@ -159,9 +159,7 @@ public class Form implements Serializable
     {
         Invitation invitation = new Invitation();
         invitation.setForm(this);
-        
-        invitations.add(invitation);
-        
+                
         return invitation;
     }
 

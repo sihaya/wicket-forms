@@ -55,6 +55,6 @@ public class FormTest
         
         Invitation invitation = form.createInvitation();
         
-        assertThat(form.getInvitations(), hasItem(invitation));
+        assertEquals(form, invitation.getForm());
     }
 }
