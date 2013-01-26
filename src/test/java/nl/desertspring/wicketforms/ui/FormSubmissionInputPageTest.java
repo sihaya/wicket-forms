@@ -27,7 +27,7 @@ public class FormSubmissionInputPageTest
         Submission submission = mock(Submission.class);
         when(submission.getForm()).thenReturn(mock(Form.class));
         when(submission.getForm().getStartPage()).thenReturn(mock(Page.class));
-                
+
         FormSubmissionInputPage page = new FormSubmissionInputPage(submissionRepository, Model.of(submission));
         
         wicketTester.startPage(page);

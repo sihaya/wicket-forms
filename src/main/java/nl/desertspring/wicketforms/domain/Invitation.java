@@ -24,7 +24,7 @@ public class Invitation implements Serializable
     @ManyToOne(optional = false)
     private Form form;
     @JoinColumn
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Submission submission;
     @Column(nullable = false)
     private String emailAddress;
@@ -147,5 +147,11 @@ public class Invitation implements Serializable
     public void setSecret(String secret)
     {
         this.secret = secret;
+    }
+    
+    public void createSubmission() {
+        if (submission == null) {
+            submission = form.createSubmission();
+        }
     }
 }

@@ -29,8 +29,8 @@ public class InvitationService
 
     private EmailService emailService;
     private InvitationRepository invitationRepository;
-    @Value("${serverUrl}")
-    private String serverUrl;
+    //@Value("${serverUrl}")
+    private String serverUrl = "http://localhost:8084/wicket-forms/invitation?invitationCode=";
 
     @Autowired
     public void setEmailService(EmailService emailService)
@@ -62,7 +62,7 @@ public class InvitationService
 
         String url = serverUrl + invitation.getSecret();
 
-        model.put("url", url);
+        model.put("filloutURL", url);
 
         Engine engine = Engine.createDefaultEngine();
         String template;

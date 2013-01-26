@@ -23,11 +23,14 @@ public class Answer implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer answerId;
+    
     private String value;
+    
     @JoinColumn
     @ManyToOne
     private Question question;
-    @JoinColumn
+    
+    @JoinColumn(nullable = false)
     @ManyToOne
     private Submission submission;
 

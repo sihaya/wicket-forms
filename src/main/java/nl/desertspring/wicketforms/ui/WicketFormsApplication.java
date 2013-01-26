@@ -27,5 +27,7 @@ public class WicketFormsApplication extends WebApplication
         super.init();
         
         getComponentInstantiationListeners().add(new SpringComponentInjector(this));
+        
+        mountPage("/invitation", SubmissionFromInvitationPage.class);
     }
 }

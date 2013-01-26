@@ -42,7 +42,7 @@ public class Form implements Serializable
     private List<Page> pages;
     
     @OrderBy("sentAt")
-    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "form")
     private List<Invitation> invitations;
     
     /**

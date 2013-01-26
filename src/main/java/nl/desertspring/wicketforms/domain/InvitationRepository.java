@@ -30,4 +30,13 @@ public class InvitationRepository
         
         invitation.getForm().getInvitations().add(invitation);
     }
+    
+    public Invitation findBySecret(String secret) {
+        return entityManager.createQuery("from Invitation i where i.secret = :secret", Invitation.class).setParameter("secret", secret).getSingleResult();
+    }
+
+    public Invitation merge(Invitation invitation)
+    {
+        return entityManager.merge(invitation);
+    }
 }

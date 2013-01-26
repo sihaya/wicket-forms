@@ -70,6 +70,7 @@ public class Submission implements Serializable
         Answer answer = new Answer();
         answer.setQuestion(question);
         answers.add(answer);
+        answer.setSubmission(this);
 
         return answer;
     }
