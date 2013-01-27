@@ -30,9 +30,9 @@
         
         <!-- mysql -->
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost/wicketforms"/>
-        <property name="username" value="root"/>
-        <property name="password" value=""/>        
+        <property name="url" value="jdbc:mysql://ec2-50-19-213-178.compute-1.amazonaws.com/wicketforms"/>
+        <property name="username" value="wicketforms"/>
+        <property name="password" value="wicketforms"/>        
     </bean>
     
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
