@@ -28,7 +28,7 @@ public class Invitation implements Serializable
     private Submission submission;
     @Column(nullable = false)
     private String emailAddress;
-    @Column(nullable = false, length = 65535)
+    @Column(nullable = false, length = 10000)
     private String message;
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
