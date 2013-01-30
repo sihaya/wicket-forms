@@ -30,7 +30,7 @@ public class InvitationService
     private EmailService emailService;
     private InvitationRepository invitationRepository;
     //@Value("${serverUrl}")
-    private String serverUrl = "http://localhost:8084/wicket-forms/invitation?invitationCode=";
+    private String serverUrl = "http://wicket-forms.sihaya.cloudbees.net/invitation?invitationCode=";
 
     @Autowired
     public void setEmailService(EmailService emailService)
