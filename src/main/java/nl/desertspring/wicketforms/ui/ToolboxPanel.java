@@ -29,7 +29,30 @@ public class ToolboxPanel extends Panel
         addPage();
         addYesNoQuestion();
         addOpenQuestion();
+        addAttachmentQuestion();
+    }
+    
+    private void addAttachmentQuestion()
+    {
+        WebMarkupContainer addOpenQuestionContainer = new WebMarkupContainer("addAttachmentQuestionContainer");
+        WebMarkupContainer addOpenQuestion = new WebMarkupContainer("addAttachmentQuestion");
+        addOpenQuestion.setOutputMarkupId(true);
+        addOpenQuestionContainer.add(addOpenQuestion);
 
+        DragSource addOpenQuestionDragSource = new DragSource(Operation.values())
+        {
+
+            @Override
+            public String[] getTypes()
+            {
+                return new String[]{"question"};
+            }
+        };
+        addOpenQuestionDragSource.drag("a.add-attachmentquestion").initiate("a.add-attachmentquestion");
+        addOpenQuestionContainer.add(addOpenQuestionDragSource);
+        addOpenQuestion.setDefaultModel(Model.of(Question.Type.ATTACHMENT));
+
+        add(addOpenQuestionContainer);
     }
     
     private void addOpenQuestion()

@@ -18,6 +18,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 
 /**
  *
@@ -44,6 +46,16 @@ public class FormSubmissionPanel extends Panel
             @Override
             public void onSubmit()
             {
+                form.visitChildren(AttachmentQuestion.class, new IVisitor<AttachmentQuestion, Void>() {
+
+                    @Override
+                    public void component(AttachmentQuestion t, IVisit<Void> ivisit)
+                    {
+                        System.out.println("visiting: " + t);
+                        t.onSubmit();
+                    }                    
+                });
+                
                 submission.getObject().submit();
 
                 submission.setObject(submissionRepository.merge(submission.getObject()));
@@ -114,6 +126,9 @@ public class FormSubmissionPanel extends Panel
                         break;
                     case OPEN:
                         component = new OpenQuestion("question", model);
+                        break;
+                    case ATTACHMENT:
+                        component = new AttachmentQuestion("question", model);
                         break;
                     default:
                         throw new IllegalStateException("Unknown component");

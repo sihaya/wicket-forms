@@ -57,6 +57,9 @@ public class QuestionPreviewPanel extends Panel
                     case OPEN:
                         component = new OpenQuestion("component", formRepository, form, item.getModel());
                         break;
+                    case ATTACHMENT:
+                        component = new AttachmentQuestion("component", formRepository, form, item.getModel());
+                        break;
                     default:
                         throw new IllegalStateException("Unknown component");
                 }
@@ -78,7 +81,7 @@ public class QuestionPreviewPanel extends Panel
                 if (transfer.getData() == null) {
                     return;
                 }
-                
+
                 page.getObject().createQuestion(transfer.<Question.Type>getData());
 
                 list.modelChanged();

@@ -21,7 +21,7 @@ import javax.persistence.ManyToOne;
 public class Question implements Serializable
 {
     public enum Type {
-        CLOSED_YES_NO, OPEN
+        CLOSED_YES_NO, OPEN, ATTACHMENT
     }
 
     @Id

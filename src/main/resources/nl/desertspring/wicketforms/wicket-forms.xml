@@ -31,10 +31,15 @@
         <property name="password" value=""/>-->
         
         <!-- mysql -->
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://ec2-50-19-213-178.compute-1.amazonaws.com/wicketforms"/>
         <property name="username" value="wicketforms"/>
-        <property name="password" value="wicketforms"/>        
+        <property name="password" value="wicketforms"/>        -->
+        
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost/wicketforms"/>
+        <property name="username" value="root"/>
+        <property name="password" value=""/>        
     </bean>
     
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -56,9 +61,9 @@
     <!-- emailing -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">        
         <property name="host">
-            <value>${SENDGRID_SMTP_HOST}</value>
+            <value>smtp.caiway.nl</value>
         </property>
-        <property name="port">
+       <!-- <property name="port">
             <value>587</value>
         </property>
         <property name="protocol">
@@ -76,6 +81,6 @@
                 <prop key="mail.smtp.starttls.enable">true</prop>
                 <prop key="mail.smtp.quitwait">false</prop>
             </props>
-        </property>
+        </property> -->
     </bean>
 </beans>
