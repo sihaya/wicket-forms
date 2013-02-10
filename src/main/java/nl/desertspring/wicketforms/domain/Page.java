@@ -103,6 +103,10 @@ public class Page implements Serializable
 
         return newQuestion;
     }
+    
+    public Question getQuestion(int index) {
+        return questions.get(index);
+    }
 
     public Question createQuestion(Question.Type type)
     {

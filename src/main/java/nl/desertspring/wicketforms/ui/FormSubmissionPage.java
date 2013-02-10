@@ -4,6 +4,7 @@
  */
 package nl.desertspring.wicketforms.ui;
 
+import nl.desertspring.grunt.domain.SubmissionProcessor;
 import nl.desertspring.wicketforms.domain.Form;
 import nl.desertspring.wicketforms.domain.FormRepository;
 import nl.desertspring.wicketforms.domain.Submission;
@@ -24,19 +25,22 @@ public class FormSubmissionPage extends BasePage
     private FormRepository formRepository;
     
     @SpringBean
+    private SubmissionProcessor submissionProcessor;
+    
+    @SpringBean
     private SubmissionRepository submissionRepository;
 
-    public FormSubmissionPage(FormRepository formRepository, SubmissionRepository submissionRepository)
+    public FormSubmissionPage(FormRepository formRepository, SubmissionRepository submissionRepository, SubmissionProcessor submissionProcessor)
     {
-        init(formRepository, submissionRepository);
+        init(formRepository, submissionRepository, submissionProcessor);
     }
 
     public FormSubmissionPage()
     {
-        init(formRepository, submissionRepository);
+        init(formRepository, submissionRepository, submissionProcessor);
     }
     
-    private void init(FormRepository formRepository, final SubmissionRepository submissionRepository)
+    private void init(FormRepository formRepository, final SubmissionRepository submissionRepository, final SubmissionProcessor submissionProcessor)
     {        
         final IModel<Form> selectedForm = new Model<Form>();
         DropDownChoice<Form> forms = new DropDownChoice<Form>("forms", selectedForm, new FormListModel(formRepository));
@@ -50,7 +54,7 @@ public class FormSubmissionPage extends BasePage
                 
                 submissionRepository.save(submission);
                 
-                setResponsePage(new FormSubmissionInputPage(submissionRepository, Model.of(submission)));
+                setResponsePage(new FormSubmissionInputPage(submissionRepository, submissionProcessor, Model.of(submission)));
             }            
         };
         

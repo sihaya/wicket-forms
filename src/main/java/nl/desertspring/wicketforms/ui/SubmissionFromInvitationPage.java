@@ -5,6 +5,7 @@
 package nl.desertspring.wicketforms.ui;
 
 import javax.persistence.NoResultException;
+import nl.desertspring.grunt.domain.SubmissionProcessor;
 import nl.desertspring.wicketforms.domain.Invitation;
 import nl.desertspring.wicketforms.domain.InvitationRepository;
 import nl.desertspring.wicketforms.domain.Submission;
@@ -26,11 +27,14 @@ public class SubmissionFromInvitationPage extends BasePage
     private InvitationRepository invitationRepository;
     @SpringBean
     private SubmissionRepository submissionRepository;
+    @SpringBean
+    private SubmissionProcessor submissionProcessor;
 
-    public SubmissionFromInvitationPage(PageParameters pageParameters, InvitationRepository invitationRepository, SubmissionRepository submissionRepository)
+    public SubmissionFromInvitationPage(PageParameters pageParameters, InvitationRepository invitationRepository, SubmissionRepository submissionRepository, SubmissionProcessor submissionProcessor)
     {
         this.invitationRepository = invitationRepository;
         this.submissionRepository = submissionRepository;
+        this.submissionProcessor = submissionProcessor;
 
         init(pageParameters);
     }
@@ -38,11 +42,6 @@ public class SubmissionFromInvitationPage extends BasePage
     public SubmissionFromInvitationPage(PageParameters pageParameters)
     {
         init(pageParameters);
-    }
-
-    public void setInvitationRepository(InvitationRepository invitationRepository)
-    {
-        this.invitationRepository = invitationRepository;
     }
 
     private void init(PageParameters pageParameters)
@@ -60,6 +59,6 @@ public class SubmissionFromInvitationPage extends BasePage
         invitation.createSubmission();
         invitation = invitationRepository.merge(invitation);
 
-        setResponsePage(new FormSubmissionInputPage(submissionRepository, Model.of(submissionRepository.merge(invitation.getSubmission()))));
+        setResponsePage(new FormSubmissionInputPage(submissionRepository, submissionProcessor, Model.of(submissionRepository.merge(invitation.getSubmission()))));
     }
 }

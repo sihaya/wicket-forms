@@ -34,6 +34,10 @@ public class Submission implements Serializable
     private List<Answer> answers;
     @Column(nullable = false)
     private boolean submitted;
+    
+    public String getQuestionValue(int page, int question) {
+        return getAnswer(form.getPage(page).getQuestion(question)).getValue();
+    }
 
     public Integer getSubmissionId()
     {

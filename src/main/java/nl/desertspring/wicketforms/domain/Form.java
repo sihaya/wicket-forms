@@ -45,6 +45,10 @@ public class Form implements Serializable
     @OneToMany(mappedBy = "form")
     private List<Invitation> invitations;
     
+    public Page getPage(int index) {
+        return pages.get(index);
+    }
+    
     /**
      * @return the formId
      */

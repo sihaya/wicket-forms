@@ -19,7 +19,7 @@ public class InvitationRepository
 {
     private EntityManager entityManager;
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "wicketforms")
     public void setEntityManager(EntityManager entityManager)
     {
         this.entityManager = entityManager;

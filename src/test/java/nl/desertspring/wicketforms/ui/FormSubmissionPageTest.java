@@ -6,10 +6,10 @@ package nl.desertspring.wicketforms.ui;
 
 import java.util.Arrays;
 import java.util.List;
+import nl.desertspring.grunt.domain.SubmissionProcessor;
 import nl.desertspring.wicketforms.domain.*;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
@@ -45,7 +45,7 @@ public class FormSubmissionPageTest
 
         when(formRepository.findAll()).thenReturn(forms);
 
-        formSubmissionPage = new FormSubmissionPage(formRepository, submissionRepository);
+        formSubmissionPage = new FormSubmissionPage(formRepository, submissionRepository, mock(SubmissionProcessor.class));
 
         wicketTester.startPage(formSubmissionPage);
     }
@@ -61,16 +61,16 @@ public class FormSubmissionPageTest
     public void givenASelectionOfAFormItCallsCreateSubmission()
     {
         FormTester formTester = wicketTester.newFormTester("newSubmissionForm");
-        
+
         Submission submission = mock(Submission.class);
         when(submission.getForm()).thenReturn(form1);
         when(form1.getStartPage()).thenReturn(mock(Page.class));
-        
+
         when(form1.createSubmission()).thenReturn(submission);
-        
+
         formTester.select("forms", 0);
         formTester.submit();
-        
+
         verify(form1).createSubmission();
     }
 }

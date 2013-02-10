@@ -21,7 +21,7 @@ public class FormRepository
 
     private EntityManager entityManager;
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "wicketforms")
     public void setEntityManager(EntityManager entityManager)
     {
         this.entityManager = entityManager;
@@ -50,7 +50,7 @@ public class FormRepository
         for (Page page : form.getPages()) {
             page.getQuestions().size();
         }
-        
+
         form.getInvitations().size();
     }
 
@@ -62,9 +62,9 @@ public class FormRepository
     public Form merge(Form form)
     {
         Form result = entityManager.merge(form);
-        
+
         init(result);
-        
+
         return result;
     }
 }

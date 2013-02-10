@@ -106,4 +106,11 @@ public class Answer implements Serializable
     {
         this.fileContent = fileContent;
     }
+
+    public String getFilename()
+    {
+        return filename;
+    }
+    
+    
 }

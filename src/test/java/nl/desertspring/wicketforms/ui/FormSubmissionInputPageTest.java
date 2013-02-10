@@ -4,6 +4,7 @@
  */
 package nl.desertspring.wicketforms.ui;
 
+import nl.desertspring.grunt.domain.SubmissionProcessor;
 import nl.desertspring.wicketforms.domain.Form;
 import nl.desertspring.wicketforms.domain.Page;
 import nl.desertspring.wicketforms.domain.Submission;
@@ -28,7 +29,7 @@ public class FormSubmissionInputPageTest
         when(submission.getForm()).thenReturn(mock(Form.class));
         when(submission.getForm().getStartPage()).thenReturn(mock(Page.class));
 
-        FormSubmissionInputPage page = new FormSubmissionInputPage(submissionRepository, Model.of(submission));
+        FormSubmissionInputPage page = new FormSubmissionInputPage(submissionRepository, mock(SubmissionProcessor.class), Model.of(submission));
         
         wicketTester.startPage(page);
         

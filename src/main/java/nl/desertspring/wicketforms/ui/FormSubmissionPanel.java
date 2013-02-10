@@ -5,6 +5,7 @@
 package nl.desertspring.wicketforms.ui;
 
 import java.util.List;
+import nl.desertspring.grunt.domain.SubmissionProcessor;
 import nl.desertspring.wicketforms.domain.Page;
 import nl.desertspring.wicketforms.domain.Question;
 import nl.desertspring.wicketforms.domain.Submission;
@@ -18,6 +19,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 
@@ -31,7 +33,7 @@ public class FormSubmissionPanel extends Panel
     private IModel<Page> currentPage;
     private IModel<Submission> submission;
 
-    public FormSubmissionPanel(String id, final SubmissionRepository submissionRepository, final IModel<Submission> submission)
+    public FormSubmissionPanel(String id, final SubmissionRepository submissionRepository, final SubmissionProcessor submissionProcessor, final IModel<Submission> submission)
     {
         super(id, submission);
 
@@ -46,19 +48,20 @@ public class FormSubmissionPanel extends Panel
             @Override
             public void onSubmit()
             {
-                form.visitChildren(AttachmentQuestion.class, new IVisitor<AttachmentQuestion, Void>() {
+                form.visitChildren(AttachmentQuestion.class, new IVisitor<AttachmentQuestion, Void>()
+                {
 
                     @Override
                     public void component(AttachmentQuestion t, IVisit<Void> ivisit)
                     {
-                        System.out.println("visiting: " + t);
                         t.onSubmit();
-                    }                    
+                    }
                 });
-                
-                submission.getObject().submit();
 
+                submission.getObject().submit();
                 submission.setObject(submissionRepository.merge(submission.getObject()));
+                
+                submissionProcessor.process(submission.getObject());
 
                 setResponsePage(new SubmissionDonePage(submission));
             }
@@ -78,6 +81,16 @@ public class FormSubmissionPanel extends Panel
             @Override
             public void onSubmit()
             {
+                form.visitChildren(AttachmentQuestion.class, new IVisitor<AttachmentQuestion, Void>()
+                {
+
+                    @Override
+                    public void component(AttachmentQuestion t, IVisit<Void> ivisit)
+                    {
+                        t.onSubmit();
+                    }
+                });
+
                 submission.setObject(submissionRepository.merge(submission.getObject()));
 
                 currentPage.setObject(submission.getObject().getForm().getNextPage(currentPage.getObject()));

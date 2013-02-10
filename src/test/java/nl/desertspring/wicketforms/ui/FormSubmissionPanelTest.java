@@ -5,6 +5,7 @@
 package nl.desertspring.wicketforms.ui;
 
 import java.util.Arrays;
+import nl.desertspring.grunt.domain.SubmissionProcessor;
 import nl.desertspring.wicketforms.domain.*;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.tester.FormTester;
@@ -53,7 +54,7 @@ public class FormSubmissionPanelTest
         when(submission.getAnswer(question1)).thenReturn(answer);
         when(answer.getQuestion()).thenReturn(question1);
 
-        formSubmissionPanel = new FormSubmissionPanel("component", submissionRepository, Model.of(submission));
+        formSubmissionPanel = new FormSubmissionPanel("component", submissionRepository, mock(SubmissionProcessor.class), Model.of(submission));
     }
 
     @Test

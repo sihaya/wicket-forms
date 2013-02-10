@@ -38,7 +38,7 @@ public class SubmissionRepository
         entityManager.persist(submission);
     }
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "wicketforms")
     public void setEntityManager(EntityManager entityManager)
     {
         this.entityManager = entityManager;

@@ -4,6 +4,7 @@
  */
 package nl.desertspring.wicketforms.ui;
 
+import nl.desertspring.grunt.domain.SubmissionProcessor;
 import nl.desertspring.wicketforms.domain.Invitation;
 import nl.desertspring.wicketforms.domain.InvitationRepository;
 import nl.desertspring.wicketforms.domain.Submission;
@@ -37,7 +38,7 @@ public class SubmissionFromInvitationPageTest
         when(invitationRepository.findBySecret("abcdef")).thenReturn(invitation);
         when(invitationRepository.merge(invitation)).thenReturn(invitation);
 
-        SubmissionFromInvitationPage submissionFromInvitationPage = new SubmissionFromInvitationPage(pageParameters, invitationRepository, mock(SubmissionRepository.class));
+        SubmissionFromInvitationPage submissionFromInvitationPage = new SubmissionFromInvitationPage(pageParameters, invitationRepository, mock(SubmissionRepository.class), mock(SubmissionProcessor.class));
 
         wicketTester.startPage(submissionFromInvitationPage);
 
