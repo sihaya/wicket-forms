@@ -28,6 +28,8 @@ public class SubmissionProcessorTest
     Grant grant;
     GrantRepository grantRepository;
     GrantFactory grantFactory;
+    
+    WorkflowService workflowService;
 
     @Before
     public void setUp()
@@ -73,6 +75,9 @@ public class SubmissionProcessorTest
         submissionProcessor.setGrantFactory(grantFactory);
         
         when(submission.getQuestionValue(0, 0)).thenReturn("1000");
+                
+        workflowService = mock(WorkflowService.class);
+        submissionProcessor.setWorkflowService(workflowService);
     }
 
     @Test
@@ -97,5 +102,12 @@ public class SubmissionProcessorTest
         submissionProcessor.process(submission);
         
         verify(grantRepository).persist(grant);
+    }
+    
+    @Test
+    public void givenASubmissionItCallsTheWorkflowService() {
+        submissionProcessor.process(submission);
+        
+        verify(workflowService).startGrantApproval(100, monument, grant);
     }
 }

@@ -25,12 +25,14 @@ public class SubmissionProcessor
     private MonumentFactory monumentFactory;
     private GrantRepository grantRepository;
     private GrantFactory grantFactory;
+    private WorkflowService workflowService;
 
     public void process(Submission submission)
     {
         processDms(submission);
-        processMonument(submission);
-        processGrant(submission);
+        Monument monument = processMonument(submission);
+        Grant grant = processGrant(submission);
+        processWorkflow(submission, grant, monument);
     }
 
     @Autowired
@@ -63,6 +65,12 @@ public class SubmissionProcessor
         this.grantRepository = grantRepository;
     }
 
+    @Autowired
+    public void setWorkflowService(WorkflowService workflowService)
+    {
+        this.workflowService = workflowService;
+    }
+
     private void processDms(Submission submission)
     {
         String foldername = Integer.toString(submission.getSubmissionId());
@@ -78,17 +86,26 @@ public class SubmissionProcessor
         }
     }
 
-    private void processMonument(Submission submission)
+    private Monument processMonument(Submission submission)
     {
         Monument monument = monumentFactory.createMonument(submission.getQuestionValue(1, 0), submission.getQuestionValue(1, 1), submission.getQuestionValue(1, 2));
 
         monumentRepository.persist(monument);
+        
+        return monument;
     }
 
-    private void processGrant(Submission submission)
+    private Grant processGrant(Submission submission)
     {
         Grant grant = grantFactory.createGrant(new BigDecimal(submission.getQuestionValue(0, 0)));
-     
+
         grantRepository.persist(grant);
+        
+        return grant;
+    }
+
+    private void processWorkflow(Submission submission, Grant grant, Monument monument)
+    {
+        workflowService.startGrantApproval(submission.getSubmissionId(), monument, grant);
     }
 }
